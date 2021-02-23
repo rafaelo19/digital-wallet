@@ -2,12 +2,15 @@ version: '3.1'
 
 services:
   apache:
-    image: php:8.0.2-apache
+    build:
+      context: .docker/
+      dockerfile: Dockerfile
     container_name: api-digital-wallet
     ports:
       - 8080:80
     volumes:
       - .:/var/www/html
+      - ./logs/apache2:/var/log/apache2
     depends_on:
       - database
     links:
