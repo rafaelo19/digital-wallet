@@ -37,10 +37,11 @@
         }
     },
     "require": {
-        "ext-pdo": "*",
         "php": "^7.3",
+        "ext-pdo": "*",
         "composer/package-versions-deprecated": "^1.10.99",
         "doctrine/orm": "^2.7",
+        "jms/serializer": "^3.11",
         "laminas/laminas-component-installer": "^2.1.2",
         "laminas/laminas-config-aggregator": "^1.2",
         "laminas/laminas-diactoros": "^2.3.0",
@@ -51,7 +52,9 @@
         "mezzio/mezzio-fastroute": "^3.0.3",
         "mezzio/mezzio-helpers": "^5.3",
         "roave/psr-container-doctrine": "^2.2",
-        "symfony/doctrine-bridge": "^4.3"
+        "robmorgan/phinx": "^0.12.5",
+        "symfony/doctrine-bridge": "^4.3",
+        "symfony/serializer": "^5.2"
     },
     "require-dev": {
         "laminas/laminas-development-mode": "^3.2",
@@ -89,6 +92,13 @@
         "cs-fix": "phpcbf",
         "serve": "php -S 0.0.0.0:8080 -t public/",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "migration": "./vendor/bin/phinx",
+        "migration:create": "./vendor/bin/phinx create",
+        "migration:migrate" : "./vendor/bin/phinx migrate -e production",
+        "migration:rollback" : "./vendor/bin/phinx rollback",
+        "migration:status" : "./vendor/bin/phinx status",
+        "migration:seed:create" : "./vendor/bin/phinx seed:create",
+        "migration:seed:run" : "./vendor/bin/phinx seed:run"
     }
 }
