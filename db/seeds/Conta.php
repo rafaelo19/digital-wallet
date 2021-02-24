@@ -17,20 +17,18 @@ class Conta extends AbstractSeed
     {
         $data = [
             [
-                'id'    => '1',
                 'nome'    => 'Persona 1',
                 'saldo'    => 0,
                 'status' => true,
             ],
             [
-                'id'    => '2',
                 'nome'    => 'Persona 2',
                 'saldo'    => 5000,
                 'status' => true,
             ]
         ];
 
-        $posts = $this->table('dw.contas');
+        $posts = $this->table('dw.conta');
         $posts->insert($data)
             ->saveData();
     }

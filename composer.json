@@ -39,6 +39,7 @@
     "require": {
         "php": "^7.3",
         "ext-pdo": "*",
+        "ext-json": "*",
         "composer/package-versions-deprecated": "^1.10.99",
         "doctrine/orm": "^2.7",
         "jms/serializer": "^3.11",

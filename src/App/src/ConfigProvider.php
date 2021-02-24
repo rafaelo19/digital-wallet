@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Handler\AccountHandler;
+use App\Handler\AccountHandlerFactory;
+use App\Service\InsertAccountService;
+use App\Service\InsertAccountServiceFactory;
+use App\Util\SerializerUtil;
+use App\Util\SerializerUtilFactory;
 use Doctrine\ORM\EntityManager;
+use Mezzio\Application;
 use Roave\PsrContainerDoctrine\EntityManagerFactory;
 
 /**
@@ -34,12 +41,25 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
+            'delegators' => [
+                Application::class => [RoutesDelegator::class]
+            ],
             'invokables' => [
                 Handler\PingHandler::class => Handler\PingHandler::class,
             ],
             'factories'  => [
+                #Db
+                EntityManager::class => EntityManagerFactory::class,
+
+                #Handler
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
-                EntityManager::class => EntityManagerFactory::class
+                AccountHandler::class => AccountHandlerFactory::class,
+
+                #Service
+                InsertAccountService::class => InsertAccountServiceFactory::class,
+
+                #Util
+                SerializerUtil::class => SerializerUtilFactory::class,
             ],
         ];
     }
