@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use Doctrine\ORM\EntityManager;
+use Roave\PsrContainerDoctrine\EntityManagerFactory;
+
 /**
  * The configuration provider for the App module
  *
@@ -36,6 +39,7 @@ class ConfigProvider
             ],
             'factories'  => [
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
+                EntityManager::class => EntityManagerFactory::class
             ],
         ];
     }
