@@ -17,7 +17,6 @@ final class CriacaoTabelas extends AbstractMigration
      * with the Table class.
      */
 
-
     public function change(): void
     {
         /**
@@ -37,12 +36,13 @@ final class CriacaoTabelas extends AbstractMigration
         $movimentos = $this->table("dw.movimento");
         $movimentos->addColumn("id_tipo_movimento","integer")
             ->addColumn("id_conta_origem","integer")
-            ->addColumn("id_conta_destino","integer")
+            ->addColumn("id_conta_destino","integer", ['null' => true])
             ->addColumn("descricao","string")
+            ->addColumn("valor", 'decimal')
             ->addColumn("datahora","datetime")
             ->addForeignKey("id_tipo_movimento", "dw.tipo_movimento", ["id"], ['constraint' => 'fk_tipimovimento_id'])
-            ->addForeignKey("id_conta_origem", "dw.conta", ["id"], ['constraint' => 'fk_contas_origem_id'])
-            ->addForeignKey("id_conta_destino", "dw.conta", ["id"], ['constraint' => 'fk_contas_destino_id'])
+            ->addForeignKey("id_conta_origem", "dw.conta", ["id"], ['constraint' => 'fk_conta_origem_id'])
+            ->addForeignKey("id_conta_destino", "dw.conta", ["id"], ['constraint' => 'fk_conta_destino_id'])
             ->create();
     }
 }

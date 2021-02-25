@@ -100,6 +100,6 @@
         "migration:rollback" : "./vendor/bin/phinx rollback",
         "migration:status" : "./vendor/bin/phinx status",
         "migration:seed:create" : "./vendor/bin/phinx seed:create",
-        "migration:seed:run" : "./vendor/bin/phinx seed:run"
+        "migration:seed" : "./vendor/bin/phinx seed:run"
     }
 }
