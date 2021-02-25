@@ -15,33 +15,29 @@ class AccountRepository extends EntityRepository
      * @return Account
      * @throws Exception
      */
-    public function insert(Account $account): Account
+    public function insertUpdate(Account $account): Account
     {
         try {
             $this->getEntityManager()->persist($account);
             $this->getEntityManager()->flush();
             return $account;
         } catch (Exception $e) {
-            print_r($e->getMessage());
-            exit;
-            throw new Exception("Erro ao tenta salvar registro!", 500);
+            throw new Exception("Erro ao tenta salvar conta!", 500);
         }
 
     }
 
     /**
-     * @param Account $account
-     * @return Account
+     * @param int $id
+     * @return Account|object
      * @throws Exception
      */
-    public function update(Account $account): Account
+    public function get(int $id): Account
     {
         try {
-            $this->getEntityManager()->persist($account);
-            $this->getEntityManager()->flush();
-            return $account;
+            return $this->findOneBy(['id' => $id]);
         } catch (Exception $e) {
-            throw new Exception("Erro ao tenta alterar registro!", 500);
+            throw new Exception("Erro ao tenta buscar conta!", 500);
         }
 
     }

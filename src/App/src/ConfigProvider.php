@@ -6,10 +6,18 @@ namespace App;
 
 use App\Handler\AccountHandler;
 use App\Handler\AccountHandlerFactory;
-use App\Service\InsertAccountService;
-use App\Service\InsertAccountServiceFactory;
-use App\Util\SerializerUtil;
-use App\Util\SerializerUtilFactory;
+use App\Handler\MovimentAccountHandler;
+use App\Handler\MovimentAccountHandlerFactory;
+use App\Service\Account\GetAccountService;
+use App\Service\Account\GetAccountServiceFactory;
+use App\Service\Account\InsertUpdateAccountService;
+use App\Service\Account\InsertUpdateAccountServiceFactory;
+use App\Service\MakeMoviment\MovimentService;
+use App\Service\MakeMoviment\MovimentServiceFactory;
+use App\Service\Moviment\InsertMovimentService;
+use App\Service\Moviment\InsertMovimentServiceFactory;
+use App\Util\Serializer;
+use App\Util\SerializerFactory;
 use Doctrine\ORM\EntityManager;
 use Mezzio\Application;
 use Roave\PsrContainerDoctrine\EntityManagerFactory;
@@ -54,12 +62,16 @@ class ConfigProvider
                 #Handler
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
                 AccountHandler::class => AccountHandlerFactory::class,
+                MovimentAccountHandler::class => MovimentAccountHandlerFactory::class,
 
                 #Service
-                InsertAccountService::class => InsertAccountServiceFactory::class,
+                GetAccountService::class => GetAccountServiceFactory::class,
+                InsertUpdateAccountService::class => InsertUpdateAccountServiceFactory::class,
+                InsertMovimentService::class => InsertMovimentServiceFactory::class,
+                MovimentService::class => MovimentServiceFactory::class,
 
                 #Util
-                SerializerUtil::class => SerializerUtilFactory::class,
+                Serializer::class => SerializerFactory::class,
             ],
         ];
     }

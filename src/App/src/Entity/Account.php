@@ -31,9 +31,9 @@ class Account
     protected $nome;
 
     /**
-     * @var string
-     * @Type("string")
-     * @ORM\Column(name="saldo", type="text", nullable=false)
+     * @var float
+     * @Type("float")
+     * @ORM\Column(name="saldo", type="float", nullable=false)
      */
     protected $saldo;
 
@@ -77,17 +77,17 @@ class Account
     }
 
     /**
-     * @return string
+     * @return float
      */
-    public function getSaldo(): string
+    public function getSaldo(): float
     {
         return $this->saldo;
     }
 
     /**
-     * @param string $saldo
+     * @param float $saldo
      */
-    public function setSaldo(string $saldo): void
+    public function setSaldo(float $saldo): void
     {
         $this->saldo = $saldo;
     }
