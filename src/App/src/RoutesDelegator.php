@@ -6,6 +6,8 @@ namespace App;
 
 use App\Handler\AccountHandler;
 use App\Handler\MovimentAccountHandler;
+use App\Middleware\ValidationAccountMiddleware;
+use App\Middleware\ValidationMovimentMiddleware;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
 
@@ -18,8 +20,8 @@ class RoutesDelegator
          */
         $app = $callback();
 
-        $app->post("/contas", [AccountHandler::class], "post.accounts");
-        $app->post("/movimentacoes", [MovimentAccountHandler::class], "post.moviments");
+        $app->post("/contas", [ValidationAccountMiddleware::class, AccountHandler::class], "post.accounts");
+        $app->post("/movimentacoes", [ValidationMovimentMiddleware::class, MovimentAccountHandler::class], "post.moviments");
 
         return $app;
     }

@@ -38,8 +38,8 @@
     },
     "require": {
         "php": "^7.3",
-        "ext-pdo": "*",
         "ext-json": "*",
+        "ext-pdo": "*",
         "composer/package-versions-deprecated": "^1.10.99",
         "doctrine/orm": "^2.7",
         "jms/serializer": "^3.11",
@@ -55,7 +55,8 @@
         "roave/psr-container-doctrine": "^2.2",
         "robmorgan/phinx": "^0.12.5",
         "symfony/doctrine-bridge": "^4.3",
-        "symfony/serializer": "^5.2"
+        "symfony/serializer": "^5.2",
+        "symfony/validator": "^5.2"
     },
     "require-dev": {
         "laminas/laminas-development-mode": "^3.2",
