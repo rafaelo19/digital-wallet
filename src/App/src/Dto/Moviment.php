@@ -6,6 +6,7 @@ namespace App\Dto;
 
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Moviment
 {
@@ -13,6 +14,7 @@ class Moviment
      * @var int
      * @Type("int")
      * @SerializedName("id_conta")
+     * @Assert\NotBlank(groups={"dep", "sqe", "trs"}, message="id_conta obrigatório")
      */
     protected $idconta;
 
@@ -20,6 +22,7 @@ class Moviment
      * @var float
      * @Type("float")
      * @SerializedName("valor")
+     * @Assert\NotBlank(groups={"dep", "sqe", "trs"}, message="valor obrigatório")
      */
     protected $valor;
 
@@ -27,6 +30,7 @@ class Moviment
      * @var int
      * @Type("int")
      * @SerializedName("id_tipo_movimento")
+     * @Assert\NotBlank(groups={"dep", "sqe", "trs"}, message="id_tipo_movimento obrigatório")
      */
     protected $idtipomovimento;
 
@@ -34,12 +38,14 @@ class Moviment
      * @var string
      * @Type("string")
      * @SerializedName("descricao")
+     * @Assert\NotBlank(groups={"dep", "sqe", "trs"}, message="descricao obrigatório")
      */
     protected $descricao;
 
     /**
      * @var Receiver
      * @Type("App\Dto\Receiver")
+     * @Assert\NotBlank(groups={"trs"}, message="destinatario obrigatório")
      */
     protected $destinatario;
 

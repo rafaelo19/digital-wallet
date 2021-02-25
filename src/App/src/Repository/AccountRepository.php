@@ -29,10 +29,10 @@ class AccountRepository extends EntityRepository
 
     /**
      * @param int $id
-     * @return Account|object
+     * @return Account|null|object
      * @throws Exception
      */
-    public function get(int $id): Account
+    public function get(int $id): ?Account
     {
         try {
             return $this->findOneBy(['id' => $id]);

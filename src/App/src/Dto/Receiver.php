@@ -6,6 +6,7 @@ namespace App\Dto;
 
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Receiver
 {
@@ -13,6 +14,7 @@ class Receiver
      * @var int
      * @Type("int")
      * @SerializedName("id_conta")
+     * @Assert\NotBlank(message="destinatario: id_conta obrigatório")
      */
     protected $idconta;
 

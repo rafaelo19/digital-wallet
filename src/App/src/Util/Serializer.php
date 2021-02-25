@@ -56,8 +56,6 @@ class Serializer
         try {
             return $this->serializer->deserialize($data, $object, self::TYPE_FORMAT);
         } catch (Exception $e) {
-            print_r($e->getMessage());
-            exit;
             throw new Exception("Erro ao tentar deserializar dados!", 400);
         }
     }

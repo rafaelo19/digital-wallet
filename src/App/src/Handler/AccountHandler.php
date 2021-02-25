@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Handler;
 
 use App\Entity\Account;
-use App\Service\InsertAccountService;
+use App\Service\Account\InsertUpdateAccountService;
 use App\Util\Response;
-use Exception;
 use App\Util\Serializer;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -21,22 +21,22 @@ class AccountHandler implements RequestHandlerInterface
     private $serializerUtil;
 
     /**
-     * @var InsertAccountService
+     * @var InsertUpdateAccountService
      */
-    private $insertAccountService;
+    private $insertUpdateAccountService;
 
     public function __construct(Serializer $serializerUtil,
-                                InsertAccountService $insertAccountService)
+                                InsertUpdateAccountService $insertUpdateAccountService)
     {
         $this->serializerUtil = $serializerUtil;
-        $this->insertAccountService = $insertAccountService;
+        $this->insertUpdateAccountService = $insertUpdateAccountService;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
             $entity = $this->serializerUtil->deserialize($request->getBody()->getContents(), Account::class);
-            $entity = $this->insertAccountService->insert($entity);
+            $entity = $this->insertUpdateAccountService->insertUpdate($entity);
             return new Response($entity, 201);
         } catch (Exception $e) {
             return new Response(["erro" => $e->getMessage()]);

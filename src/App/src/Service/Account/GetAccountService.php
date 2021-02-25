@@ -22,10 +22,10 @@ class GetAccountService
 
     /**
      * @param int $id
-     * @return Account
+     * @return Account|null
      * @throws Exception
      */
-    public function get(int $id): Account
+    public function get(int $id): ?Account
     {
         return $this->accountRepository->get($id);
     }

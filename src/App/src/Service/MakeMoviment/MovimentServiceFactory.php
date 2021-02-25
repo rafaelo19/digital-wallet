@@ -18,12 +18,12 @@ class MovimentServiceFactory
         $getAccountService = $container->get(GetAccountService::class);
         $insertAccountService = $container->get(InsertUpdateAccountService::class);
         $insertMoviment = $container->get(InsertMovimentService::class);
-        $typesMoviment = $container->get('config')['types-moviment'];
+        $typesMovimentConfig = $container->get('config')['types-moviment'];
         return new MovimentService($entityManager,
             $getAccountService,
             $insertAccountService,
             $insertMoviment,
-            $typesMoviment);
+            $typesMovimentConfig);
     }
 
 }
