@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Handler;
 
 use App\Dto\Moviment;
+use App\Dto\Response as ResponseDto;
 use App\Service\MakeMoviment\MovimentService;
 use App\Util\Response;
 use Exception;
@@ -37,7 +38,9 @@ class MovimentAccountHandler implements RequestHandlerInterface
         try {
             $movimentDto = $this->serializerUtil->deserialize($request->getBody()->getContents(), Moviment::class);
             $this->movimentService->makeMoviment($movimentDto);
-            return new Response(["message" => "Movimentação feita com sucesso!"], 201);
+            $res = new ResponseDto();
+            $res->setData("Movimentação feita com sucesso!");
+            return new Response($res, 201);
         } catch (Exception $e) {
             return new Response(["erro" => $e->getMessage()]);
         }

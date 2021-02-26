@@ -6,6 +6,8 @@ namespace App;
 
 use App\Handler\AccountHandler;
 use App\Handler\AccountHandlerFactory;
+use App\Handler\GetMovimentAccountHandler;
+use App\Handler\GetMovimentAccountHandlerFactory;
 use App\Handler\MovimentAccountHandler;
 use App\Handler\MovimentAccountHandlerFactory;
 use App\Middleware\ValidationAccountMiddleware;
@@ -20,6 +22,8 @@ use App\Service\MakeMoviment\MovimentService;
 use App\Service\MakeMoviment\MovimentServiceFactory;
 use App\Service\MakeMoviment\ValidationDataMoviment;
 use App\Service\MakeMoviment\ValidationDataMovimentFactory;
+use App\Service\Moviment\GetMovimentService;
+use App\Service\Moviment\GetMovimentServiceFactory;
 use App\Service\Moviment\InsertMovimentService;
 use App\Service\Moviment\InsertMovimentServiceFactory;
 use App\Service\TypeMoviment\GetTypeMovimentService;
@@ -60,9 +64,7 @@ class ConfigProvider
             'delegators' => [
                 Application::class => [RoutesDelegator::class]
             ],
-            'invokables' => [
-                Handler\PingHandler::class => Handler\PingHandler::class,
-            ],
+            'invokables' => [],
             'factories'  => [
                 #Db
                 EntityManager::class => EntityManagerFactory::class,
@@ -75,6 +77,7 @@ class ConfigProvider
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
                 AccountHandler::class => AccountHandlerFactory::class,
                 MovimentAccountHandler::class => MovimentAccountHandlerFactory::class,
+                GetMovimentAccountHandler::class => GetMovimentAccountHandlerFactory::class,
 
                 #Service
                 GetTypeMovimentService::class => GetTypeMovimentServiceFactory::class,
@@ -82,6 +85,7 @@ class ConfigProvider
                 InsertUpdateAccountService::class => InsertUpdateAccountServiceFactory::class,
                 InsertMovimentService::class => InsertMovimentServiceFactory::class,
                 MovimentService::class => MovimentServiceFactory::class,
+                GetMovimentService::class => GetMovimentServiceFactory::class,
                 ValidationDataMoviment::class => ValidationDataMovimentFactory::class,
 
                 #Util

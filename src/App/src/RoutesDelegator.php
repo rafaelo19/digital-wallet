@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use App\Handler\AccountHandler;
+use App\Handler\GetMovimentAccountHandler;
 use App\Handler\MovimentAccountHandler;
 use App\Middleware\ValidationAccountMiddleware;
 use App\Middleware\ValidationMovimentMiddleware;
@@ -22,6 +23,7 @@ class RoutesDelegator
 
         $app->post("/contas", [ValidationAccountMiddleware::class, AccountHandler::class], "post.accounts");
         $app->post("/movimentacoes", [ValidationMovimentMiddleware::class, MovimentAccountHandler::class], "post.moviments");
+        $app->get("/contas/{idconta:\d+}/movimentacoes", [GetMovimentAccountHandler::class], "get.moviments");
 
         return $app;
     }
