@@ -7,6 +7,7 @@ namespace App\Service\Account;
 use Exception;
 use App\Entity\Account;
 use App\Repository\AccountRepository;
+use App\Dto\Account as AccountDto;
 
 class InsertUpdateAccountService
 {
@@ -18,6 +19,20 @@ class InsertUpdateAccountService
     public function __construct(AccountRepository $accountRepository)
     {
         $this->accountRepository = $accountRepository;
+    }
+
+    /**
+     * @param AccountDto $accountDto
+     * @return Account
+     * @throws Exception
+     */
+    public function insertAccount(AccountDto $accountDto): Account
+    {
+        $account = new Account();
+        $account->setNome($accountDto->getNome());
+        $account->setSaldo($accountDto->getSaldo());
+        $account->setStatus(true);
+        return $this->insertUpdate($account);
     }
 
     /**

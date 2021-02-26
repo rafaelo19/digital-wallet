@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Dto;
 
 use JMS\Serializer\Annotation\Type;
-use JMS\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Account
@@ -23,13 +22,6 @@ class Account
      * @Assert\NotBlank(message="saldo obrigatório")
      */
     protected $saldo;
-
-    /**
-     * @var bool
-     * @Type("bool")
-     * @Assert\NotBlank(message="status obrigatório")
-     */
-    protected $status;
 
     /**
      * @return string
@@ -63,19 +55,4 @@ class Account
         $this->saldo = $saldo;
     }
 
-    /**
-     * @return bool
-     */
-    public function isStatus(): bool
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param bool $status
-     */
-    public function setStatus(bool $status): void
-    {
-        $this->status = $status;
-    }
 }

@@ -40,7 +40,7 @@ class ValidationAccountMiddleware implements MiddlewareInterface
             if ($validations) {
                 throw new Exception($validations, 400);
             }
-            return $handler->handle($request);
+            return $handler->handle($request->withAttribute('accountDto', $accountDto));
         } catch (Exception $e) {
             return new Response($e->getMessage(), $e->getCode() ?? 500);
         }

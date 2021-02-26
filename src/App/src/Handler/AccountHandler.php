@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Handler;
 
 use App\Dto\Response as ResponseDto;
-use App\Entity\Account;
 use App\Service\Account\InsertUpdateAccountService;
 use App\Util\Response;
 use App\Util\Serializer;
@@ -36,10 +35,9 @@ class AccountHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $account = $this->serializerUtil->deserialize($request->getBody()->getContents(), Account::class);
-            $account = $this->insertUpdateAccountService->insertUpdate($account);
+            $this->insertUpdateAccountService->insertAccount($request->getAttribute('accountDto'));
             $res = new ResponseDto();
-            $res->setData($account);
+            $res->setData("Conta criado com sucesso!");
             return new Response($res, 201);
         } catch (Exception $e) {
             return new Response(["erro" => $e->getMessage()]);
