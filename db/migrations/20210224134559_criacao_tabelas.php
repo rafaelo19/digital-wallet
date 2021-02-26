@@ -17,8 +17,10 @@ final class CriacaoTabelas extends AbstractMigration
      * with the Table class.
      */
 
-    public function change(): void
+    public function up(): void
     {
+        $this->execute("create schema dw;");
+
         /**
          * Coluna id com auto incremento é criado automatico, sem necessidade de definição na migration.
          */
@@ -44,5 +46,14 @@ final class CriacaoTabelas extends AbstractMigration
             ->addForeignKey("id_conta_origem", "dw.conta", ["id"], ['constraint' => 'fk_conta_origem_id'])
             ->addForeignKey("id_conta_destino", "dw.conta", ["id"], ['constraint' => 'fk_conta_destino_id'])
             ->create();
+
+    }
+
+    public function down(): void
+    {
+        $this->table("dw.movimento")->drop()->save();
+        $this->table("dw.tipo_movimento")->drop()->save();
+        $this->table("dw.conta")->drop()->save();
+        $this->execute("drop schema dw;");
     }
 }
