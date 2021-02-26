@@ -101,6 +101,7 @@
         "migration:rollback" : "./vendor/bin/phinx rollback",
         "migration:status" : "./vendor/bin/phinx status",
         "migration:seed:create" : "./vendor/bin/phinx seed:create",
-        "migration:seed" : "./vendor/bin/phinx seed:run"
+        "migration:seed" : "./vendor/bin/phinx seed:run",
+        "migration:migrate:seed" : "./vendor/bin/phinx migrate -e production && ./vendor/bin/phinx seed:run"
     }
 }
