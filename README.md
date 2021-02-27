@@ -38,7 +38,7 @@ $ docker exec -it api-digital-wallet bash
 | :--------------------------------|:--------| :---------------------------|
 | /contas                          | POST    | Criar uma conta             |
 | /movimentacoes                   | POST    | Fazer movimentação na conta |
-| /contas/{idconta}/movimentações  | POST    | Busca de moviemntações      |
+| /contas/{idconta}/movimentacoes  | POST    | Busca de moviemntações      |
 
 ## Dados para consumir rotas
 
