@@ -23,7 +23,7 @@ $ docker-compose up -d --build
 $ docker exec api-digital-wallet composer install
 ```
 
-* Excutar migration para criar tabelas do banco de dados e popular algumas:
+* Executar migration para criar tabelas do banco de dados e popular algumas:
 ```
 $ docker exec api-digital-wallet composer migration:migrate:seed
 ```
