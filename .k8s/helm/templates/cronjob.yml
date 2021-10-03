@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-cron-job
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: {{ .Release.Name }}-cron-job
+              image: rafaelo19/api-digital-wallet:v3.0.1
+              command: ["/usr/local/bin/php", "/var/www/html/Send.php"]
+          restartPolicy: OnFailure

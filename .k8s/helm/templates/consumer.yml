@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-consumer
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-consumer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-consumer
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-consumer-hello
+          image: rafaelo19/api-digital-wallet:v3.0.1
+          command: ["/usr/local/bin/php", "/var/www/html/Receive.php"]
+          ports:
+            - containerPort: 80
+        - name: {{ .Release.Name }}-consumer-test
+          image: rafaelo19/api-digital-wallet:v3.0.1
+          command: ["/usr/local/bin/php", "/var/www/html/ReceiveTest.php"]
+          ports:
+            - containerPort: 80

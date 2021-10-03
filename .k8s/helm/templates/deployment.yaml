@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: digital-wallet
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  replicas: {{ .Values.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: digital-wallet
+          image: rafaelo19/api-digital-wallet:v3.0.1
+          ports:
+            - containerPort: 80
