@@ -1,8 +1,10 @@
 version: '3.1'
 
 services:
-  apache:
-    image: rafaelo19/php7.4-apache:1.0.0
+  api-digital-wallet:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
     container_name: api-digital-wallet
     ports:
       - 8080:80
@@ -14,7 +16,9 @@ services:
     links:
       - database
     networks:
-      - api-conection
+      - api-connection
+    env_file:
+      - .env
 
   database:
     container_name: bd-api-digital-wallet
@@ -22,12 +26,12 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_DB: digital-wallet
-      POSTGRES_PASSWORD: admin
-      POSTGRES_USER: admin
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
     networks:
-      - api-conection
+      - api-connection
 
 networks:
-  api-conection:
-    name: api-conection-network
+  api-connection:
+    name: api-connection-network
