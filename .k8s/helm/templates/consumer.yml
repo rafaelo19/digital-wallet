@@ -14,12 +14,18 @@ spec:
     spec:
       containers:
         - name: {{ .Release.Name }}-consumer-hello
-          image: rafaelo19/api-digital-wallet:v3.0.1
-          command: ["/usr/local/bin/php", "/var/www/html/Receive.php"]
+          image: rafaelo19/api-digital-wallet:{{ .Values.image.tag }}
+          command: ["/usr/local/bin/php", "/var/www/html/ReceiveQueueHello.php"]
           ports:
             - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: env-configmap
         - name: {{ .Release.Name }}-consumer-test
-          image: rafaelo19/api-digital-wallet:v3.0.1
-          command: ["/usr/local/bin/php", "/var/www/html/ReceiveTest.php"]
+          image: rafaelo19/api-digital-wallet:{{ .Values.image.tag }}
+          command: ["/usr/local/bin/php", "/var/www/html/ReceiveQueueTest.php"]
           ports:
             - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: env-configmap

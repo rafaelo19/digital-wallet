@@ -1,5 +1,8 @@
 replicas: 1
 
+image:
+  tag: 4.0.1
+
 service:
   port: 80
   type: NodePort

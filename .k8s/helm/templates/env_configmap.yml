@@ -3,8 +3,13 @@ kind: ConfigMap
 metadata:
   name: env-configmap
 data:
-  DATABASE_HOST: "database"
-  DATABASE_PORT: "5432"
-  DATABASE_USER: "admin"
-  DATABASE_PASSWORD: "admin"
-  DATABASE_NAME: "digital-wallet"
+  DATABASE_HOST:
+  DATABASE_PORT:
+  DATABASE_USER:
+  DATABASE_PASSWORD:
+  DATABASE_NAME:
+  RABBITMQ_HOST:
+  RABBITMQ_PORT:
+  RABBITMQ_USER:
+  RABBITMQ_PASSWORD:
+  RABBITMQ_VHOST:
