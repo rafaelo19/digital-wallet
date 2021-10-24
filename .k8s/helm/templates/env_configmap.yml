@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: env-configmap
 data:
+  #Preencher com os dados respectivos igualmente .env
   DATABASE_HOST:
   DATABASE_PORT:
   DATABASE_USER:

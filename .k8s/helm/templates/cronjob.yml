@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
             - name: {{ .Release.Name }}-cron-job
-              image: rafaelo19/api-digital-wallet:{{ .Values.image.tag }}
+              image: {{ .Values.image.name }}:{{ .Values.image.tag }}
               command: ["/usr/local/bin/php", "/var/www/html/SendQueues.php"]
               envFrom:
                 - configMapRef:
