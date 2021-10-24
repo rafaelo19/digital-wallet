@@ -1,14 +1,13 @@
 # digital-wallet
 Api - Carteira digital com Kubernetes
 
-## Instalação
 
 #### Requisitos
-> Helm  
+* Helm  
+* Cluster Kubernetes
+---
 
-> Cluster Kubernetes
-
-* Subir aplicação em cluster
+> Subir aplicação em cluster 
 ```
 $ helm upgrade digital-wallet --install --namespace default .k8s/helm
 ```  
