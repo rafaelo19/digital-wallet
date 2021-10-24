@@ -17,3 +17,6 @@ spec:
           image: rafaelo19/api-digital-wallet:v3.0.1
           ports:
             - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: env-configmap
