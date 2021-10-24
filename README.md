@@ -35,7 +35,7 @@ $ docker exec -it api-digital-wallet bash
 
 ##### Kubernetes
 
-<a href=“https://github.com/rafaelo19/digital-wallet/tree/feature/k8s/.k8s/helm/README.md“>Subindo ambiente em cluster com Kubernetes</a>
+[Subindo ambiente em cluster com Kubernetes](https://github.com/rafaelo19/digital-wallet/tree/feature/k8s/.k8s/helm/README.md)
 
 ## Rotas
 | Url                              | Metodo  |  Uso                        |
