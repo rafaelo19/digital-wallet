@@ -1,0 +1,9 @@
+replicas: 1
+
+image:
+  name: rafaelo19/api-digital-wallet
+  tag: 4.0.1
+
+service:
+  port: 80
+  type: NodePort

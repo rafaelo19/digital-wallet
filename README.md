@@ -6,33 +6,38 @@ Ideia é como uma carteira digital (simples), permitindo criar conta, realizar m
 
 ## Instalação
 
-* Clonar o projeto, e em seguida navegar até a pasta do projeto:
+> Clonar o projeto, e em seguida navegar até a pasta do projeto:
 ```
 $ git clone https://github.com/rafaelo19/digital-wallet.git
 
 $ cd digital-wallet
 ```
 
-* Criando o ambiente:
+> Criando o ambiente:
 ```
 $ docker-compose up -d --build
 ```
 
-* Instalando depêndencias da aplicação:
+> Instalando depêndencias da aplicação:
 ```
 $ docker exec api-digital-wallet composer install
 ```
 
-* Executar migration para criar tabelas do banco de dados e popular algumas:
+> Executar migration para criar tabelas do banco de dados e popular algumas:
 ```
 $ docker exec api-digital-wallet composer migration:migrate:seed
 ```
 
-* Se necessário entrar no shell do container:
+> Se necessário entrar no shell do container:
 ```
 $ docker exec -it api-digital-wallet bash
 ```
+---
+#### Kubernetes
 
+[Subindo ambiente em cluster com Kubernetes](https://github.com/rafaelo19/digital-wallet/tree/main/.k8s/helm/README.md)
+
+---
 ## Rotas
 | Url                              | Metodo  |  Uso                        |
 | :--------------------------------|:--------| :---------------------------|
