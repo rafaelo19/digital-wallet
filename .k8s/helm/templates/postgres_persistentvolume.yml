@@ -1,3 +1,4 @@
+#Comentados para não gerar volume local do banco de dados
 #kind: PersistentVolume
 #apiVersion: v1
 #metadata:

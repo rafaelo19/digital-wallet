@@ -21,10 +21,3 @@ spec:
           envFrom:
             - configMapRef:
                 name: postgres-configmap
-
-
-
-#      volumes:
-#        - name: digital-wallet
-#          persistentVolumeClaim:
-#            claimName: postgres-pv-claim
