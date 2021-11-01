@@ -4,11 +4,12 @@ metadata:
   name: env-configmap
 data:
   #Preencher com os dados respectivos igualmente .env
-  DATABASE_HOST:
-  DATABASE_PORT:
-  DATABASE_USER:
-  DATABASE_PASSWORD:
-  DATABASE_NAME:
+  DATABASE_HOST: "postgres"
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "digital-wallet"
+  DATABASE_USER: "admin"
+  DATABASE_PASSWORD: "admin"
+
   RABBITMQ_HOST:
   RABBITMQ_PORT:
   RABBITMQ_USER:
