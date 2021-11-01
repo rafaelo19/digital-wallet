@@ -14,4 +14,4 @@ $ helm upgrade digital-wallet --install --namespace default .k8s/helm
 ```  
 
 
-##### Aplicação e banco de dados seram criados e integrados.
+#### Aplicação e banco de dados seram criados e integrados.
