@@ -20,3 +20,12 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-configmap
+      initContainers:
+        - name: {{ .Release.Name }}-migration
+          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+          command: ["php", "./db/script_release_1.php"]
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: env-configmap

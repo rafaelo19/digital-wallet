@@ -7,18 +7,14 @@ try {
 
 function connect(string $host, string $port, string $db, string $user, string $password): PDO
 {
-    try {
-        $dsn = "pgsql:host=$host;port=$port;dbname=$db;";
+    $dsn = "pgsql:host=$host;port=$port;dbname=$db;";
 
-        return new PDO(
-            $dsn,
-            $user,
-            $password,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
-    } catch (PDOException $e) {
-        die($e->getMessage());
-    }
+    return new PDO(
+        $dsn,
+        $user,
+        $password,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
 }
 
 $host = getenv("DATABASE_HOST");
@@ -27,11 +23,17 @@ $user = getenv("DATABASE_USER");
 $password = getenv("DATABASE_PASSWORD");
 $db = getenv("DATABASE_NAME");
 
-$pdo = connect($host, $port, $db, $user, $password);
+$connect = false;
 
-try {
-    $pdo->exec($sql);
-} catch (Throwable $e) {
-    print_r($e->getMessage());
+while (!$connect) {
+
+    try {
+        $pdo = connect($host, $port, $db, $user, $password);
+        $pdo->exec($sql);
+        $connect = true;
+    } catch (Throwable $e) {
+        print_r($e->getMessage());
+        $connect = false;
+    }
 }
-exit();
+exit;
