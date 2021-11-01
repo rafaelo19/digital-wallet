@@ -13,6 +13,11 @@ $ git clone https://github.com/rafaelo19/digital-wallet.git
 $ cd digital-wallet
 ```
 
+> Gerar arquivo .env:
+```
+$ cp .env_example .env
+```
+
 > Criando o ambiente:
 ```
 $ docker-compose up -d --build

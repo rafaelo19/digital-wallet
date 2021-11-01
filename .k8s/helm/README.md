@@ -3,13 +3,12 @@ Api - Carteira digital com Kubernetes
 
 
 #### Requisitos
+
 * Helm  
-* Cluster Kubernetes
+* Ferramenta para criar Cluster Kubernetes (Ex.: Minikube)
 ---
 
-> Subir aplicação em cluster 
+> Subir aplicação no cluster 
 ```
 $ helm upgrade digital-wallet --install --namespace default .k8s/helm
 ```  
-  
- 

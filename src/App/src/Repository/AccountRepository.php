@@ -22,7 +22,7 @@ class AccountRepository extends EntityRepository
             $this->getEntityManager()->flush();
             return $account;
         } catch (Exception $e) {
-            throw new Exception("Erro ao tenta salvar conta!", 500);
+            throw new Exception("Erro ao tenta salvar conta! {$e->getMessage()}", 500);
         }
 
     }
