@@ -1,31 +1,31 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ .Release.Name }}-consumer
-spec:
-  selector:
-    matchLabels:
-      app: {{ .Release.Name }}-consumer
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: {{ .Release.Name }}-consumer
-    spec:
-      containers:
-        - name: {{ .Release.Name }}-consumer-hello
-          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
-          command: ["/usr/local/bin/php", "/var/www/html/ReceiveQueueHello.php"]
-          ports:
-            - containerPort: 80
-          envFrom:
-            - configMapRef:
-                name: env-configmap
-        - name: {{ .Release.Name }}-consumer-test
-          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
-          command: ["/usr/local/bin/php", "/var/www/html/ReceiveQueueTest.php"]
-          ports:
-            - containerPort: 80
-          envFrom:
-            - configMapRef:
-                name: env-configmap
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: {{ .Release.Name }}-consumer
+#spec:
+#  selector:
+#    matchLabels:
+#      app: {{ .Release.Name }}-consumer
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: {{ .Release.Name }}-consumer
+#    spec:
+#      containers:
+#        - name: {{ .Release.Name }}-consumer-hello
+#          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+#          command: ["/usr/local/bin/php", "/var/www/html/ReceiveQueueHello.php"]
+#          ports:
+#            - containerPort: 80
+#          envFrom:
+#            - configMapRef:
+#                name: env-configmap
+#        - name: {{ .Release.Name }}-consumer-test
+#          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+#          command: ["/usr/local/bin/php", "/var/www/html/ReceiveQueueTest.php"]
+#          ports:
+#            - containerPort: 80
+#          envFrom:
+#            - configMapRef:
+#                name: env-configmap

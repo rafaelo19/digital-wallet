@@ -2,7 +2,7 @@ replicas: 1
 
 image:
   name: rafaelo19/api-digital-wallet
-  tag: 4.0.3
+  tag: 4.0.6
 
 service:
   port: 80

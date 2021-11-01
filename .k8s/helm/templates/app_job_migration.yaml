@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: digital-wallet
+spec:
+  template:
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-migration
+          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+          command: ["php", "db/release-1.sql"]
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: env-configmap
+      restartPolicy: Never
