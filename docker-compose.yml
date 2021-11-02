@@ -7,7 +7,7 @@ services:
       dockerfile: .docker/Dockerfile
     container_name: api-digital-wallet
     ports:
-      - 8080:80
+      - 80:80
     volumes:
       - .:/var/www/html
       - ./logs/apache2:/var/log/apache2
