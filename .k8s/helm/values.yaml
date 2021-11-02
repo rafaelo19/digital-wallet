@@ -7,3 +7,10 @@ image:
 service:
   port: 80
   type: NodePort
+
+database:
+  name: name
+  image: postgres
+  tag: 10.1
+  port: 5432
+  replicas: 1
