@@ -6,10 +6,10 @@ use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
 
-// To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
-// `config/autoload/local.php`.
+// Cache is opt-in to avoid stale merged configuration in local Docker runs.
+$configCacheEnabled = filter_var(getenv('CONFIG_CACHE_ENABLED') ?: false, FILTER_VALIDATE_BOOL);
 $cacheConfig = [
-    'config_cache_path' => 'data/cache/config-cache.php',
+    'config_cache_path' => $configCacheEnabled ? 'data/cache/config-cache.php' : null,
 ];
 
 $aggregator = new ConfigAggregator([

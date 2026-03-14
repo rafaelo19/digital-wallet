@@ -7,6 +7,7 @@ namespace App\Service\MakeMoviment;
 use App\Dto\Moviment as MovimentDto;
 use App\Entity\Account;
 use App\Entity\TypeMoviment;
+use App\Service\Account\AccountAuthorizationService;
 use App\Service\Account\GetAccountService;
 use App\Service\TypeMoviment\GetTypeMovimentService;
 use Exception;
@@ -22,6 +23,11 @@ class ValidationDataMoviment
      * @var GetAccountService
      */
     private $getAccountService;
+
+    /**
+     * @var AccountAuthorizationService
+     */
+    private $accountAuthorizationService;
 
     /**
      * @var array
@@ -45,10 +51,12 @@ class ValidationDataMoviment
 
     public function __construct(GetTypeMovimentService $getTypeMovimentService,
                                 GetAccountService $getAccountService,
+                                AccountAuthorizationService $accountAuthorizationService,
                                 array $typesMovimentConfig)
     {
         $this->getTypeMovimentService = $getTypeMovimentService;
         $this->getAccountService = $getAccountService;
+        $this->accountAuthorizationService = $accountAuthorizationService;
         $this->typesMovimentConfig = $typesMovimentConfig;
     }
 
@@ -56,9 +64,10 @@ class ValidationDataMoviment
      * @param MovimentDto $movimentDto
      * @throws Exception
      */
-    public function validation(MovimentDto $movimentDto)
+    public function validation(MovimentDto $movimentDto, int $idUser)
     {
         $this->movimentDto = $movimentDto;
+        $this->accountAuthorizationService->ensureOwnership($movimentDto->getIdConta(), $idUser);
         $this->account = $this->getAccountService->get($movimentDto->getIdConta());
         $this->typeMoviment = $this->getTypeMovimentService->get($movimentDto->getIdTipoMovimento());
 

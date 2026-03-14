@@ -41,4 +41,16 @@ class AccountRepository extends EntityRepository
         }
 
     }
+
+    /**
+     * @throws Exception
+     */
+    public function getByIdAndUser(int $id, int $idUser): ?Account
+    {
+        try {
+            return $this->findOneBy(['id' => $id, 'idusuario' => $idUser]);
+        } catch (Exception $e) {
+            throw new Exception("Erro ao tenta buscar conta do usuario!", 500);
+        }
+    }
 }

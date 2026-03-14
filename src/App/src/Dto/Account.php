@@ -6,53 +6,39 @@ namespace App\Dto;
 
 use JMS\Serializer\Annotation\Type;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class Account
 {
-    /**
-     * @var string
-     * @Type("string")
-     * @Assert\NotBlank(message="nome obrigatório")
-     */
+    #[Type('string')]
     protected $nome;
 
-    /**
-     * @var float
-     * @Type("float")
-     * @Assert\NotBlank(message="saldo obrigatório")
-     */
+    #[Type('float')]
     protected $saldo;
 
-    /**
-     * @return string
-     */
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('nome', new Assert\NotBlank(['message' => 'nome obrigatorio']));
+        $metadata->addPropertyConstraint('saldo', new Assert\NotBlank(['message' => 'saldo obrigatorio']));
+    }
+
     public function getNome(): string
     {
         return $this->nome;
     }
 
-    /**
-     * @param string $nome
-     */
     public function setNome(string $nome): void
     {
         $this->nome = $nome;
     }
 
-    /**
-     * @return float
-     */
     public function getSaldo(): float
     {
         return $this->saldo;
     }
 
-    /**
-     * @param float $saldo
-     */
     public function setSaldo(float $saldo): void
     {
         $this->saldo = $saldo;
     }
-
 }

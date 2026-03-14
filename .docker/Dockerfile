@@ -1,17 +1,22 @@
-FROM rafaelo19/php:7.4
+FROM php:8.5-apache
 
-COPY .docker/php/php.ini /usr/local/etc/php/
+WORKDIR /var/www/html
 
-COPY . /var/www/html
-
-RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
-
-RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN apt-get update \
-    && apt-get install -y libpq5 libpq-dev \
+    && apt-get install -y --no-install-recommends git unzip libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql \
-    && apt-get autoremove --purge -y libpq-dev \
-    && apt-get clean ;
+    && a2enmod rewrite \
+    && printf "ServerName localhost\n" > /etc/apache2/conf-available/servername.conf \
+    && a2enconf servername \
+    && sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf \
+    && sed -ri -e 's!AllowOverride None!AllowOverride All!g' /etc/apache2/apache2.conf \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN chmod 777 -Rf /var/www/html/data /var/www/html/vendor
+COPY .docker/php/php.ini /usr/local/etc/php/conf.d/app.ini
+COPY . /var/www/html
+
+RUN mkdir -p /var/www/html/data /var/www/html/logs/apache2 \
+    && chown -R www-data:www-data /var/www/html
