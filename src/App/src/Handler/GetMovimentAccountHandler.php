@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use App\Service\Moviment\GetMovimentService;
-use App\Util\Response;
-use App\Dto\Response as ResponseDto;
 use Exception;
+use App\Service\Account\AccountAuthorizationService;
+use App\Service\Moviment\GetMovimentService;
+use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Throwable;
 
 class GetMovimentAccountHandler implements RequestHandlerInterface
 {
@@ -19,20 +20,37 @@ class GetMovimentAccountHandler implements RequestHandlerInterface
      */
     private $getMovimentService;
 
-    public function __construct(GetMovimentService $getMovimentService)
+    /**
+     * @var AccountAuthorizationService
+     */
+    private $accountAuthorizationService;
+
+    public function __construct(GetMovimentService $getMovimentService,
+                                AccountAuthorizationService $accountAuthorizationService)
     {
         $this->getMovimentService = $getMovimentService;
+        $this->accountAuthorizationService = $accountAuthorizationService;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
             $idAccount = intval($request->getAttribute("idconta"));
-            $res = new ResponseDto();
-            $res->setData($this->getMovimentService->getMoviments($idAccount));
-            return new Response($res, 201);
-        } catch (Exception $e) {
-            return new Response(["erro" => $e->getMessage()]);
+            $authenticatedUser = $request->getAttribute('authenticatedUser');
+            if (!$authenticatedUser) {
+                throw new Exception('Acesso nao autorizado!', 401);
+            }
+
+            $idUser = $authenticatedUser->getId();
+            $this->accountAuthorizationService->ensureOwnership($idAccount, $idUser);
+            return new JsonResponse(['data' => $this->getMovimentService->getMoviments($idAccount)], 200);
+        } catch (Throwable $e) {
+            $status = $e->getCode();
+            if (!is_int($status) || $status < 400 || $status >= 600) {
+                $status = 500;
+            }
+
+            return new JsonResponse(['erro' => $e->getMessage()], $status);
         }
     }
 }

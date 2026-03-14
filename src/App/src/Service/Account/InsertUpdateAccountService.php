@@ -26,10 +26,11 @@ class InsertUpdateAccountService
      * @return Account
      * @throws Exception
      */
-    public function insertAccount(AccountDto $accountDto): Account
+    public function insertAccount(AccountDto $accountDto, int $idUser): Account
     {
         $account = new Account();
         $account->setNome($accountDto->getNome());
+        $account->setIdUsuario($idUser);
         $account->setSaldo($accountDto->getSaldo());
         $account->setStatus(true);
         return $this->insertUpdate($account);

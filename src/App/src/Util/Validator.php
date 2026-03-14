@@ -21,7 +21,9 @@ class Validator
 
     private function setValidator()
     {
-        $this->validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
+        $this->validator = Validation::createValidatorBuilder()
+            ->addMethodMapping('loadValidatorMetadata')
+            ->getValidator();
     }
 
     public function validate($object, $message = null, $groups = null): string

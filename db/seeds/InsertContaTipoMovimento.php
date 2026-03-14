@@ -1,53 +1,69 @@
 <?php
 
+declare(strict_types=1);
 
 use Phinx\Seed\AbstractSeed;
 
 class InsertContaTipoMovimento extends AbstractSeed
 {
-    /**
-     * Run Method.
-     *
-     * Write your database seeder using this method.
-     *
-     * More information on writing seeders is available here:
-     * https://book.cakephp.org/phinx/0/en/seeding.html
-     */
-    public function run()
+    public function run(): void
     {
-        $dataConta = [
-            [
-                "nome"    => "Persona 1",
-                "saldo"    => 0,
-                "status" => true,
-            ],
-            [
-                "nome"    => "Persona 2",
-                "saldo"    => 5000,
-                "status" => true,
-            ]
-        ];
+        $usuario = $this->fetchRow('select id from dw.usuario order by id asc limit 1');
 
-        $conta = $this->table("dw.conta");
-        $conta->insert($dataConta)
-            ->saveData();
+        if (!$usuario) {
+            $this->table('dw.usuario')
+                ->insert([
+                    [
+                        'email' => 'rafael@digitalwallet.local',
+                        'senha' => password_hash('123456', PASSWORD_BCRYPT),
+                        'status' => true,
+                    ],
+                ])
+                ->saveData();
 
-        $dataTipoMovimento = [
-            [
-                "cod"    => "DEP",
-                "descricao" => "Depósito"
-            ],
-            [
-                "cod"    => "SQE",
-                "descricao" => "Saque"
-            ],
-            [
-                "cod"    => "TRS",
-                "descricao" => "Transferência"
-            ],
-        ];
-        $tipoMovimento = $this->table("dw.tipo_movimento");
-        $tipoMovimento->insert($dataTipoMovimento)
+            $usuario = $this->fetchRow('select id from dw.usuario order by id asc limit 1');
+        }
+
+        $idUsuario = (int) ($usuario['id'] ?? 0);
+
+        if ((int) ($this->fetchRow('select count(*) as total from dw.conta')['total'] ?? 0) === 0) {
+            $this->table('dw.conta')
+                ->insert([
+                    [
+                        'nome' => 'Persona 1',
+                        'id_usuario' => $idUsuario,
+                        'saldo' => 0,
+                        'status' => true,
+                    ],
+                    [
+                        'nome' => 'Persona 2',
+                        'id_usuario' => $idUsuario,
+                        'saldo' => 5000,
+                        'status' => true,
+                    ],
+                ])
+                ->saveData();
+        }
+
+        if ((int) ($this->fetchRow('select count(*) as total from dw.tipo_movimento')['total'] ?? 0) > 0) {
+            return;
+        }
+
+        $this->table('dw.tipo_movimento')
+            ->insert([
+                [
+                    'cod' => 'DEP',
+                    'descricao' => 'Deposito',
+                ],
+                [
+                    'cod' => 'SQE',
+                    'descricao' => 'Saque',
+                ],
+                [
+                    'cod' => 'TRS',
+                    'descricao' => 'Transferencia',
+                ],
+            ])
             ->saveData();
     }
 }

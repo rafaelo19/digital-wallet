@@ -6,8 +6,11 @@ namespace App;
 
 use App\Handler\AccountHandler;
 use App\Handler\GetMovimentAccountHandler;
+use App\Handler\LoginHandler;
 use App\Handler\MovimentAccountHandler;
+use App\Middleware\AuthenticationMiddleware;
 use App\Middleware\ValidationAccountMiddleware;
+use App\Middleware\ValidationLoginMiddleware;
 use App\Middleware\ValidationMovimentMiddleware;
 use Mezzio\Application;
 use Psr\Container\ContainerInterface;
@@ -21,9 +24,10 @@ class RoutesDelegator
          */
         $app = $callback();
 
-        $app->post("/contas", [ValidationAccountMiddleware::class, AccountHandler::class], "post.accounts");
-        $app->post("/movimentacoes", [ValidationMovimentMiddleware::class, MovimentAccountHandler::class], "post.moviments");
-        $app->get("/contas/{idconta:\d+}/movimentacoes", [GetMovimentAccountHandler::class], "get.moviments");
+        $app->post("/login", [ValidationLoginMiddleware::class, LoginHandler::class], "post.login");
+        $app->post("/contas", [AuthenticationMiddleware::class, ValidationAccountMiddleware::class, AccountHandler::class], "post.accounts");
+        $app->post("/movimentacoes", [AuthenticationMiddleware::class, ValidationMovimentMiddleware::class, MovimentAccountHandler::class], "post.moviments");
+        $app->get("/contas/{idconta:\d+}/movimentacoes", [AuthenticationMiddleware::class, GetMovimentAccountHandler::class], "get.moviments");
 
         return $app;
     }

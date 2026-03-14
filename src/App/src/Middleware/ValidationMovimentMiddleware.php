@@ -6,14 +6,15 @@ namespace App\Middleware;
 
 use App\Dto\Moviment;
 use App\Service\MakeMoviment\ValidationDataMoviment;
-use App\Util\Response;
 use App\Util\Serializer;
 use App\Util\Validator;
 use Exception;
+use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Throwable;
 
 class ValidationMovimentMiddleware implements MiddlewareInterface
 {
@@ -68,11 +69,18 @@ class ValidationMovimentMiddleware implements MiddlewareInterface
                 }
             }
 
-            $this->validationDataMoviment->validation($moviment);
+            $authenticatedUser = $request->getAttribute('authenticatedUser');
+            $idUser = $authenticatedUser->getId();
+            $this->validationDataMoviment->validation($moviment, $idUser);
 
-            return $handler->handle($request);
-        } catch (Exception $e) {
-            return new Response($e->getMessage(), $e->getCode() ?? 500);
+            return $handler->handle($request->withAttribute('movimentDto', $moviment));
+        } catch (Throwable $e) {
+            $status = $e->getCode();
+            if (!is_int($status) || $status < 400 || $status >= 600) {
+                $status = 500;
+            }
+
+            return new JsonResponse(['erro' => $e->getMessage()], $status);
         }
     }
 }

@@ -4,36 +4,30 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use App\Service\MakeMoviment\MovimentService;
-use Exception;
+use App\Service\Auth\LoginService;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 
-class MovimentAccountHandler implements RequestHandlerInterface
+class LoginHandler implements RequestHandlerInterface
 {
     /**
-     * @var MovimentService
+     * @var LoginService
      */
-    private $movimentService;
+    private $loginService;
 
-    public function __construct(MovimentService $movimentService)
+    public function __construct(LoginService $loginService)
     {
-        $this->movimentService = $movimentService;
+        $this->loginService = $loginService;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         try {
-            $movimentDto = $request->getAttribute('movimentDto');
-            if (!$movimentDto) {
-                throw new Exception('Dados da movimentacao nao informados!', 400);
-            }
-
-            $this->movimentService->makeMoviment($movimentDto);
-            return new JsonResponse(['data' => 'Movimentacao feita com sucesso!'], 201);
+            $result = $this->loginService->login($request->getAttribute('loginDto'));
+            return new JsonResponse(['data' => $result], 200);
         } catch (Throwable $e) {
             $status = $e->getCode();
             if (!is_int($status) || $status < 400 || $status >= 600) {
